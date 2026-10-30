@@ -1,0 +1,2907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline';">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTAKU | Premium Restaurant</title>
+  <meta name="description" content="OTAKU - Premium food restaurant experience" />
+  <meta name="author" content="OTAKU" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg: #f5f3f0;
+      --bg-strong: #fffaf8;
+      --panel: rgba(255,255,255,0.98);
+      --panel-2: #fff;
+      --soft: #f0ece8;
+      --line: rgba(20,20,22,0.08);
+      --line-strong: rgba(20,20,22,0.12);
+      --text: #17191d;
+      --muted: #686d77;
+      --muted-2: #8a8f9b;
+      --primary: #e72f22;
+      --primary-2: #ff7b5c;
+      --primary-soft: rgba(231, 47, 34, 0.12);
+      --green: #1ea76d;
+      --warning: #f7b948;
+      --shadow-sm: 0 10px 24px rgba(17,17,17,0.06);
+      --shadow-md: 0 18px 40px rgba(17,17,17,0.12);
+      --shadow-lg: 0 26px 55px rgba(17,17,17,0.16);
+      --radius: 26px;
+      --radius-sm: 18px;
+      --radius-xs: 12px;
+      --container: 1180px;
+      --transition: 0.24s ease;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(231,47,34,0.10), transparent 28%),
+        linear-gradient(180deg, #f9f7f5 0%, #f3f0ee 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; max-width: 100%; }
+    button, input, select, textarea { font: inherit; }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      padding-bottom: 70px;
+    }
+
+    /* ANIMATED CLOSING HOURS BANNER */
+    .hours-banner {
+      background: linear-gradient(135deg, #17191d, #2d323b);
+      color: #fff;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 0.84rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 1010;
+      transform: translateY(-100%);
+      max-height: 0;
+      transition: transform 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
+    }
+
+    .hours-banner.show {
+      transform: translateY(0);
+      max-height: 50px;
+      padding: 10px 16px;
+    }
+
+    .hours-banner.closed-mode {
+      background: linear-gradient(135deg, var(--primary), #c52014);
+      color: #fff;
+      animation: pulseBanner 2s infinite;
+    }
+
+    @keyframes pulseBanner {
+      0% { opacity: 0.95; }
+      50% { opacity: 1; box-shadow: inset 0 0 15px rgba(255,255,255,0.2); }
+      100% { opacity: 0.95; }
+    }
+
+    .hours-banner i {
+      color: var(--warning);
+      font-size: 1rem;
+    }
+
+    .hours-banner.closed-mode i {
+      color: #ffe9a9;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(14px);
+      background: rgba(248, 245, 242, 0.88);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      box-shadow: 0 12px 22px rgba(231,47,34,0.22);
+    }
+
+    .brand-name {
+      font-size: 1.02rem;
+    }
+
+    /* LIVE BUSINESS STATUS STYLES */
+    .business-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line-strong);
+      white-space: nowrap;
+    }
+
+    .business-status.open {
+      color: #0c7a52;
+      border-color: rgba(30, 167, 109, 0.3);
+      background: rgba(30, 167, 109, 0.08);
+    }
+
+    .business-status.closed {
+      color: var(--primary);
+      border-color: rgba(231, 47, 34, 0.3);
+      background: rgba(231, 47, 34, 0.08);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .business-status.open .status-dot {
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(30, 167, 109, 0.2);
+    }
+
+    .business-status.closed .status-dot {
+      background: var(--primary);
+      box-shadow: 0 0 0 4px rgba(231, 47, 34, 0.2);
+    }
+
+    /* SECTION SEARCH BAR STYLES (PLACED ABOVE BROAST / MENU) */
+    .section-search-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .section-search {
+      position: relative;
+      width: min(500px, 100%);
+      display: flex;
+      align-items: center;
+    }
+
+    .section-search input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 0.8rem 3rem 0.8rem 1.4rem;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      transition: all var(--transition);
+    }
+
+    .section-search input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(231, 47, 34, 0.12);
+    }
+
+    .section-search .search-icon {
+      position: absolute;
+      right: 18px;
+      color: var(--muted);
+      font-size: 1rem;
+      pointer-events: none;
+      transition: color var(--transition);
+    }
+
+    .section-search input:focus + .search-icon {
+      color: var(--primary);
+    }
+
+    /* HEADER CART BUTTON STYLES */
+    .header-cart-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      padding: 0.6rem 0.95rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(231,47,34,0.2);
+      flex-shrink: 0;
+      transition: transform var(--transition);
+    }
+
+    .header-cart-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .header-cart-count {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.25);
+      font-size: 0.75rem;
+    }
+
+    /* TOAST POPUP NOTIFICATION STYLES */
+    .toast-popup {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(23, 25, 29, 0.92);
+      color: #fff;
+      padding: 0.8rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      z-index: 1200;
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast-popup.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast-popup i {
+      color: var(--green);
+      font-size: 1.1rem;
+    }
+
+    .hero {
+      position: relative;
+      padding: 26px 0 32px;
+    }
+
+    .hero-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.88));
+      border: 1px solid var(--line);
+      border-radius: 34px;
+      padding: clamp(22px, 3vw, 36px);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -12% -28% 48%;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(231,47,34,0.18), transparent 62%);
+      filter: blur(8px);
+      z-index: 0;
+    }
+
+    .hero-copy,
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.56rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(231,47,34,0.08);
+      border: 1px solid rgba(231,47,34,0.1);
+      color: var(--primary);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(30, 167, 109, 0.12);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.8rem, 7vw, 5.4rem);
+      line-height: 0.96;
+      letter-spacing: -0.065em;
+      font-weight: 900;
+      font-family: "Inter", sans-serif;
+    }
+
+    h1 .accent {
+      background: linear-gradient(120deg, var(--primary) 0%, #ff9d8b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy p {
+      margin: 22px 0 0;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .hero-actions {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn {
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      padding: 0.8rem 1.2rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 18px 30px rgba(231,47,34,0.18);
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 36px rgba(231,47,34,0.25);
+    }
+
+    .hero-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .visual-wrap {
+      position: relative;
+      width: min(100%, 470px);
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .food-plate {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 430px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 30% 22%, rgba(255,255,255,0.7), transparent 20%),
+        linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.5));
+      border: 1px solid rgba(17,17,17,0.06);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.65), var(--shadow-md);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .food-plate img {
+      position: relative;
+      width: 80%;
+      transform: translateY(18px);
+      filter: drop-shadow(0 30px 30px rgba(17,17,17,0.18));
+    }
+
+    .promo-tag {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      background: rgba(255,255,255,0.74);
+      border: 1px solid rgba(17,17,17,0.06);
+      border-radius: 18px;
+      padding: 0.8rem 0.95rem;
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(10px);
+    }
+
+    .promo-tag small {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .promo-tag strong {
+      font-size: 1.08rem;
+      line-height: 1.2;
+    }
+
+    .promo-tag span {
+      color: var(--green);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      color: var(--primary);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-weight: 700;
+      font-size: clamp(2.3rem, 4vw, 3.5rem);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+
+    .section-head .line {
+      width: 120px;
+      height: 4px;
+      margin: 18px auto 0;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--warning), var(--primary));
+    }
+
+    .filters {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .filter-chip {
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.6);
+      color: var(--text);
+      padding: 0.72rem 1rem;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .filter-chip.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 16px 26px rgba(231,47,34,0.18);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 8px;
+    }
+
+    /* SKELETON LOADER ANIMATION STYLES */
+    .skeleton-card {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .skeleton-box {
+      background: linear-gradient(90deg, #ece9e6 25%, #f7f5f3 37%, #ece9e6 63%);
+      background-size: 400% 100%;
+      animation: shimmer 1.4s ease infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 100% 0; }
+      100% { background-position: -100% 0; }
+    }
+
+    .skeleton-img { height: 220px; width: 100%; }
+    .skeleton-body { padding: 1.1rem; display: grid; gap: 12px; }
+    .skeleton-title { height: 24px; width: 70%; border-radius: 8px; }
+    .skeleton-text { height: 16px; width: 90%; border-radius: 6px; }
+    .skeleton-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+    .skeleton-btn { height: 36px; width: 100px; border-radius: 999px; }
+
+    .menu-card {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      cursor: pointer;
+      outline: none;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(17,17,17,0.12);
+    }
+
+    .menu-image {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: #f2efed;
+    }
+
+    .menu-image img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .menu-card:hover .menu-image img { transform: scale(1.04); }
+
+    .menu-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.52rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(23,25,29,0.72);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    .menu-badge.hot { color: #ffd7d2; }
+    .menu-badge.popular { color: #ffe9a9; }
+
+    .menu-body { padding: 1.1rem 1.1rem 1.2rem; }
+
+    .menu-category {
+      display: inline-block;
+      color: var(--primary);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .menu-title {
+      margin: 0;
+      font-size: 1.34rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+    }
+
+    .menu-desc {
+      margin: 10px 0 0;
+      color: var(--muted);
+      min-height: 42px;
+      font-size: 0.9rem;
+    }
+
+    .menu-foot {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .price-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .price-box strong {
+      font-size: 1.08rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .price-box small {
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .view-btn {
+      border: 1px solid rgba(231,47,34,0.12);
+      background: rgba(231,47,34,0.08);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 0.8rem 1rem;
+      min-width: 104px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .view-btn:hover { background: rgba(231,47,34,0.14); }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .about {
+      padding: 110px 0 40px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .story-visual {
+      position: relative;
+      min-height: 470px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.8));
+    }
+
+    .story-visual img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-badge {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      background: rgba(23,25,29,0.75);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 0.9rem 1.05rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .story-badge strong {
+      display: block;
+      font-size: 1.7rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .story-badge span {
+      color: rgba(255,255,255,0.76);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .story-copy span.label {
+      color: var(--primary);
+      font-size: 0.74rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 800;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .story-copy h3 {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      letter-spacing: -0.05em;
+      line-height: 1.08;
+    }
+
+    .story-copy h3 .accent { color: var(--primary); }
+
+    .story-copy .line {
+      width: 120px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--warning), var(--primary));
+      margin: 18px 0 20px;
+    }
+
+    .story-copy p {
+      color: var(--muted);
+      margin: 0 0 20px;
+      font-size: 1rem;
+    }
+
+    .story-features {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 0.98rem 1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .feature-icon.green { background: rgba(30,167,109,0.10); color: var(--green); }
+    .feature-icon.gold { background: rgba(247,185,73,0.12); color: #c18609; }
+
+    .reservation {
+      padding: 110px 0 36px;
+    }
+
+    .reservation-box {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 0;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .reservation-info {
+      padding: 2rem;
+      background:
+        linear-gradient(180deg, rgba(231,47,34,0.08), rgba(255,255,255,0.46)),
+        rgba(255,255,255,0.7);
+      border-right: 1px solid var(--line);
+    }
+
+    .reservation-info h4 {
+      margin: 0 0 12px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+    }
+
+    .reservation-info p { color: var(--muted); margin: 0 0 24px; }
+
+    .info-stack { display: grid; gap: 14px; }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 0.8rem 0.9rem;
+      border-radius: 16px;
+      border: 1px solid rgba(17,17,17,0.08);
+      background: rgba(255,255,255,0.55);
+    }
+
+    .info-item .icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(231,47,34,0.12);
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .info-item strong {
+      display: block;
+      color: var(--primary);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .info-item span { color: var(--text); font-size: 0.96rem; }
+
+    .reservation-form-wrap { padding: 2rem; }
+
+    .reservation-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 8px; }
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .field input, .field select, .field textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(17,17,17,0.08);
+      border-radius: 12px;
+      padding: 0.95rem 1rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-reservation {
+      grid-column: 1 / -1;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      border-radius: 12px;
+      min-height: 52px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 20px 30px rgba(231,47,34,0.18);
+    }
+
+    .success-msg {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+      background: rgba(30,167,109,0.08);
+      border: 1px solid rgba(30,167,109,0.18);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      color: #0c7a52;
+      font-weight: 600;
+    }
+
+    .success-msg.show { display: flex; }
+
+    .site-footer {
+      background: rgba(255,255,255,0.68);
+      border-top: 1px solid var(--line);
+      padding: 40px 0 22px;
+      margin-top: 36px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .footer-brand p {
+      color: var(--muted);
+      margin: 16px 0 0;
+      max-width: 360px;
+    }
+
+    .socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .socials a {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: rgba(255,255,255,0.7);
+      transition: transform var(--transition), border-color var(--transition);
+    }
+
+    .footer-col h5 { margin: 0 0 16px; font-size: 1.08rem; }
+
+    .mini-links {
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .footer-contact {
+      display: grid;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .footer-contact .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .footer-contact .item i {
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    .footer-bottom {
+      width: 100%;
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+
+    /* SMALLER DEVELOPER BRANDING STYLES */
+    .developer-info {
+      font-size: 0.75rem;
+      line-height: 1.4;
+      opacity: 0.85;
+    }
+
+    .developer-info p {
+      margin: 0;
+    }
+
+    .developer-info a {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .cart-panel {
+      position: fixed;
+      right: 18px;
+      bottom: 20px;
+      width: min(400px, calc(100% - 24px));
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      z-index: 1140;
+      transform: translateY(20px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform var(--transition), opacity var(--transition), visibility var(--transition);
+      overflow: hidden;
+    }
+
+    .cart-panel.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .cart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1rem 0.8rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .cart-header h4 { margin: 0; font-size: 1.06rem; }
+
+    .cart-close {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: rgba(17,17,17,0.02);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .cart-list {
+      max-height: 46vh;
+      overflow-y: auto;
+      padding: 0.8rem 1rem;
+      display: grid;
+      gap: 12px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0.8rem 0.7rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(245,243,240,0.7);
+    }
+
+    .cart-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .cart-meta strong { font-size: 0.94rem; }
+    .cart-meta small {
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .cart-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cart-price {
+      color: var(--text);
+      font-weight: 800;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .remove-item {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .cart-footer {
+      border-top: 1px solid var(--line);
+      padding: 1rem;
+      display: grid;
+      gap: 14px;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .summary-row strong {
+      color: var(--text);
+      font-size: 1.1rem;
+    }
+
+    .checkout-form { display: grid; gap: 10px; }
+
+    .checkout-form input, .checkout-form textarea {
+      width: 100%;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: rgba(245,243,240,0.9);
+      padding: 0.8rem 0.9rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    .checkout-form textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .checkout-form button {
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      border-radius: 12px;
+      min-height: 48px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 18px 28px rgba(231,47,34,0.18);
+    }
+
+    .cart-empty {
+      padding: 1rem 0.6rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,15,18,0.54);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+      z-index: 1100;
+    }
+
+    .drawer-backdrop.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .product-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(530px, 100%);
+      height: 100%;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid var(--line);
+      box-shadow: -22px 0 50px rgba(17,17,17,0.15);
+      transform: translateX(110%);
+      transition: transform var(--transition);
+      z-index: 1110;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1rem 0.8rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .drawer-kicker {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .drawer-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawer-cart-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      box-shadow: 0 8px 16px rgba(231,47,34,0.2);
+    }
+
+    .drawer-cart-count {
+      display: inline-grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      font-size: 0.7rem;
+    }
+
+    .drawer-close {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: rgba(17,17,17,0.02);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .drawer-body {
+      overflow-y: auto;
+      padding: 1rem 1rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .drawer-image-wrap {
+      position: relative;
+      min-height: 240px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #f5f2ef;
+    }
+
+    .drawer-image-wrap img {
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .drawer-info {
+      background: rgba(245,243,240,0.7);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 1rem;
+    }
+
+    .drawer-info h3 {
+      margin: 0;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      letter-spacing: -0.05em;
+      line-height: 1.08;
+      font-family: "Playfair Display", serif;
+    }
+
+    .drawer-info p {
+      color: var(--muted);
+      margin: 10px 0 0;
+    }
+
+    .selector-group { display: grid; gap: 14px; }
+
+    .variant-box {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.75);
+      padding: 0.9rem 0.9rem 0.65rem;
+    }
+
+    .variant-heading { margin-bottom: 12px; }
+    .variant-heading strong { display: block; font-size: 1rem; }
+    .variant-heading small {
+      display: block;
+      color: var(--muted);
+      margin-top: 6px;
+      font-size: 0.75rem;
+    }
+
+    .variant-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0.75rem 0.15rem 0.28rem;
+      border-top: 1px solid rgba(17,17,17,0.06);
+    }
+
+    .variant-row:first-of-type { border-top: none; }
+    .variant-name { flex: 1; min-width: 0; }
+
+    .variant-name strong {
+      display: block;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+
+    .variant-name small {
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .variant-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .variant-price {
+      color: var(--text);
+      font-weight: 800;
+      font-size: 0.9rem;
+      min-width: 66px;
+      text-align: right;
+    }
+
+    .stepper {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(17,17,17,0.04);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      padding: 3px;
+    }
+
+    .stepper button {
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 1.05rem;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .stepper input {
+      width: 30px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+      outline: none;
+      pointer-events: none;
+    }
+
+    .pick-btn {
+      min-width: 60px;
+      min-height: 34px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(231,47,34,0.18);
+    }
+
+    .drawer-footer {
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,0.96);
+      padding: 0.9rem 1rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .drawer-total {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .drawer-total small {
+      color: var(--muted);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .drawer-total strong {
+      font-size: 1.2rem;
+      letter-spacing: -0.04em;
+    }
+
+    .drawer-submit {
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      border-radius: 999px;
+      min-width: 160px;
+      min-height: 48px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 16px 28px rgba(231,47,34,0.2);
+    }
+
+    @media (max-width: 980px) {
+      .hero-card, .about-grid, .reservation-box, .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      .reservation-info {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .menu-grid { grid-template-columns: 1fr; }
+
+      .hero { padding-top: 20px; }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .reservation-form { grid-template-columns: 1fr; }
+
+      .cart-panel {
+        right: 12px;
+        bottom: 12px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .container {
+        width: min(var(--container), calc(100% - 22px));
+      }
+
+      .topbar-inner {
+        min-height: 68px;
+        gap: 8px;
+      }
+
+      .brand-name { font-size: 0.95rem; }
+
+      .business-status { font-size: 0.68rem; padding: 0.3rem 0.6rem; }
+
+      .hero-card { padding: 18px 18px 24px; }
+
+      .food-plate { min-height: 360px; }
+
+      .variant-row { flex-wrap: wrap; }
+
+      .variant-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- ANIMATED OPENING / CLOSING HOURS BANNER -->
+    <div class="hours-banner" id="hoursBanner">
+      <i class="fa-solid fa-clock" id="bannerIcon"></i>
+      <span id="bannerText">Checking restaurant hours...</span>
+    </div>
+
+    <!-- TOPBAR WITH BRAND, LIVE STATUS AND HEADER CART BUTTON -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand" aria-label="OTAKU">
+          <div class="brand-mark"><i class="fa-solid fa-utensils"></i></div>
+          <div class="brand-name">OTAKU</div>
+        </div>
+
+        <!-- LIVE BUSINESS STATUS INDICATOR -->
+        <div class="business-status" id="businessStatus">
+          <span class="status-dot"></span>
+          <span id="statusText">Checking...</span>
+        </div>
+
+        <!-- HEADER CART BUTTON -->
+        <button class="header-cart-btn" id="headerCartBtn" type="button" aria-label="Open cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="header-cart-count" id="headerCartCount">0</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <div class="eyebrow">Freshly prepared daily</div>
+            <h1>Food that feels <span class="accent">crafted</span>, not rushed.</h1>
+            <p>From crispy broast and signature pizzas to loaded fries, cozy coffee, and indulgent shakes-OTAKU brings premium taste to every table and doorstep.</p>
+
+            <div class="hero-actions">
+              <button class="primary-btn" type="button" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+                <i class="fa-solid fa-bowl-food"></i> Explore Menu
+              </button>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="visual-wrap">        
+              <div class="food-plate">
+                <img src="img/banner-img.jpg" alt="Featured food" loading="lazy" decoding="async" />
+              </div>
+              <div class="promo-tag">
+                <small>Chef special</small>
+                <strong>Otaku Signature</strong><br />
+                <span>Fresh • Premium • Fast</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU SECTION WITH SEARCH BAR PLACED RIGHT ABOVE BROAST -->
+    <section class="menu" id="menu">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">What's cooking</span>
+          <h2>Our delicious menu</h2>
+          <div class="line"></div>
+        </div>
+
+        <!-- SEARCH BAR PLACED ABOVE BROAST SECTION -->
+        <div class="section-search-container">
+          <div class="section-search">
+            <input type="text" id="menuSearchInput" placeholder="Search menu (e.g. Broast, Pizza, Burger)..." />
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </div>
+
+        <div class="filters" id="filters"></div>
+        <div class="menu-grid" id="menuGrid"></div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container about-grid">
+        <div class="story-visual">
+          <img src="img/banner-img.jpg" alt="Restaurant story" loading="lazy" decoding="async" />
+          <div class="story-badge">
+            <strong>100%</strong>
+            <span>Fresh ingredients</span>
+          </div>
+        </div>
+
+        <div class="story-copy">
+          <span class="label">Our story</span>
+          <h3>We invite you to visit<br />our <span class="accent">food restaurant</span></h3>
+          <div class="line"></div>
+          <p>Taku began as a small corner joint with a big dream - to serve food that brings people together. Today we're proud to serve thousands of happy customers every week with the same passion that started it all.</p>
+
+          <div class="story-features">
+            <div class="feature-item">
+              <div class="feature-icon green"><i class="fa-solid fa-leaf"></i></div>
+              <div>
+                <h6>100% Fresh Ingredients</h6>
+                <p>We source locally and sustainably. Every ingredient is hand-picked daily for maximum freshness.</p>
+              </div>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-icon gold"><i class="fa-solid fa-award"></i></div>
+              <div>
+                <h6>Lightning-Fast Delivery</h6>
+                <p>Order online and get hot, fresh food at your door in under 25 minutes, guaranteed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reservation" id="reservation">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">Book a table</span>
+          <h2>Make a reservation</h2>
+          <div class="line"></div>
+        </div>
+
+        <div class="reservation-box">
+          <div class="reservation-info">
+            <h4>Reserve your table for a memorable dining experience</h4>
+            <p>We recommend booking 24 hours in advance for weekend evenings and family dining.</p>
+
+            <div class="info-stack">
+              <div class="info-item">
+                <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                <div>
+                  <strong>Address</strong>
+                  <span>Taizab Mill Road, Near Khuram Chowk, Naimat Colony, Madina Town Faisalabad</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="icon"><i class="fa-solid fa-phone"></i></div>
+                <div>
+                  <strong>Phone</strong>
+                  <span>+92-329-0099952</span>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <div class="icon"><i class="fa-solid fa-clock"></i></div>
+                <div>
+                  <strong>Hours</strong>
+                  <span>Mon - Sun: 10:00 AM - 3:00 AM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="reservation-form-wrap">
+            <form class="reservation-form" id="reservationForm">
+              <div class="field">
+                <label for="name">Full Name *</label>
+                <input id="name" name="name" type="text" placeholder="xyz" required />
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone Number *</label>
+                <input id="phone" name="phone" type="tel" placeholder="+92 000-0000" required />
+              </div>
+
+              <div class="field">
+                <label for="email">Email Address *</label>
+                <input id="email" name="email" type="email" placeholder="you@email.com" required />
+              </div>
+
+              <div class="field">
+                <label for="guests">Number of Guests *</label>
+                <select id="guests" name="guests" required>
+                  <option value="">Select</option>
+                  <option>1 Person</option>
+                  <option>2 People</option>
+                  <option>3 - 4 People</option>
+                  <option>5 - 6 People</option>
+                  <option>7 - 10 People</option>
+                  <option>10+ People</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="date">Date *</label>
+                <input id="date" name="date" type="date" required />
+              </div>
+
+              <div class="field">
+                <label for="time">Time *</label>
+                <select id="time" name="time" required>
+                  <option value="">Select</option>
+                  <option>10:00 AM</option>
+                  <option>11:00 AM</option>
+                  <option>12:00 AM</option>
+                  <option>01:00 PM</option>
+                  <option>02:00 PM</option>
+                  <option>03:00 PM</option>
+                  <option>04:00 PM</option>
+                  <option>05:00 PM</option>
+                  <option>06:00 PM</option>
+                  <option>07:00 PM</option>
+                  <option>08:00 PM</option>
+                  <option>09:00 PM</option>
+                  <option>10:00 PM</option>
+                  <option>11:00 PM</option>
+                  <option>12:00 AM</option>
+                  <option>01:00 AM</option>
+                  <option>02:00 AM</option>
+                  <option>03:00 AM</option>
+                </select>
+              </div>
+
+              <div class="field full">
+                <label for="message">Special Requests</label>
+                <textarea id="message" name="message" placeholder="Allergies, dietary needs, special occasions..."></textarea>
+              </div>
+
+              <button type="submit" class="submit-reservation">Confirm Reservation</button>
+            </form>
+
+            <div class="success-msg" id="successMsg">
+              <i class="fa-solid fa-circle-check"></i>
+              <span>Reservation request sent to WhatsApp.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="site-footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand" aria-label="OTAKU">
+            <div class="brand-mark"><i class="fa-solid fa-utensils"></i></div>
+            <div class="brand-name">OTAKU</div>
+          </div>
+          <p>We bring the world's finest flavors together in a fast, friendly, and affordable experience. Every meal crafted with love.</p>
+
+          <div class="socials">
+            <a href="https://www.facebook.com/share/1EunTVMLAq/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/otaku12aa?xtok=d252bGdqMnhkem5r&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@otaku12aa?_r=1&_t=ZS-9AgO3mhiPAq" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <div class="mini-links">
+            <a href="#hero">Home</a>
+            <a href="#about">About</a>
+            <a href="#menu">Menu</a>
+            <a href="#reservation">Reservation</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Get In Touch</h5>
+          <div class="footer-contact">
+            <div class="item"><i class="fa-solid fa-location-dot"></i><span>Address: Taizab Mill Road, Near Khuram Chowk, Naimat Colony, Madina Town Faisalabad</span></div>
+            <div class="item"><i class="fa-solid fa-phone"></i><span>+92-329-0099952</span></div>
+            <div class="item"><i class="fa-solid fa-envelope"></i><span>Otaku12aaa@gmail.com</span></div>
+            <div class="item"><i class="fa-solid fa-clock"></i><span>Mon - Sun: 10:00 AM - 3:00 AM</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 <b>OTAKU</b>.</div>
+        <div class="developer-info">
+          <p>Developer by DATA AXE</p>
+          <p><a href="tel:+923036360008">+92 303-6360008</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <aside class="cart-panel" id="cartPanel" aria-label="Shopping cart">
+    <div class="cart-header">
+      <h4>Your Order</h4>
+      <button class="cart-close" id="cartClose" type="button" aria-label="Close cart">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="cart-list" id="cartList"></div>
+
+    <div class="cart-footer">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <strong id="subtotalValue">Rs. 0</strong>
+      </div>
+
+      <form class="checkout-form" id="checkoutForm">
+        <input type="text" id="customerName" name="customerName" placeholder="Your Name" required />
+        <input type="tel" id="customerPhone" name="customerPhone" placeholder="Phone Number" required />
+        <textarea id="address" name="address" placeholder="Delivery Address (optional)"></textarea>
+        <button type="submit">Send Order via WhatsApp</button>
+      </form>
+    </div>
+  </aside>
+
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="product-drawer" id="productDrawer" aria-label="Menu product"></aside>
+
+  <!-- TOAST POPUP CONTAINER -->
+  <div class="toast-popup" id="toastPopup">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMsg">Item added to cart successfully!</span>
+  </div>
+
+  <script>
+    const filters = [
+      "All",
+      "Broast",
+      "Traditional Pizza",
+      "Special Pizza",
+      "Signature Pizza",   
+      "Square Pizza",
+      "Burger",
+      "Special Platter",
+      "Sandwich",
+      "Pasta",
+      "Wrap",
+      "Appetizer",
+      "Spin Roll",
+      "Wings",
+      "Hot Coffee",
+      "Tea",
+      "Cold Cofee",
+      "Mocktail",
+      "Soda",
+      "Shakes",
+      "Ice Cream"
+    ];
+
+    const menuData = [
+      {
+        id: "broast",
+        title: "Injected Broast",
+        category: "Broast",
+        badge: "Hot",
+        badgeClass: "hot",
+        image: "img/menu/1.jpg",
+        short: "Click to view Quarter, Half & Full options",
+        description: "Specially injected with signature spices for extra juicy, tender, and soft chicken.",
+        firstPrice: 650,
+        items: [
+          { label: "Quarter", detail: "2 Pcs Chicken, Fries, 1 Bun,1 Dip Souce", price: 650 },
+          { label: "Half", detail: "4 Pcs Chicken, Fries, 1 Bun,1 Dip", price: 1300 },
+          { label: "Full", detail: "8 Pcs Chicken, Fries, 2 Buns,2 Dip", price: 2400 }
+        ]
+      },
+      {
+        id: "traditional-pizza",
+        title: "Traditional Pizza",
+        category: "Traditional Pizza",
+        badge: "Popular",
+        badgeClass: "popular",
+        image: "img/menu/2.jpg",
+        short: "Click to view flavors & sizes",
+        description: "Classic pizza favorites made for sharing with the perfect balance of sauce, cheese, and spice.",
+        firstPrice: 649,
+        items: [
+          {
+            label: "Tikka Pizza",
+            detail: "Pizza Sauce, Chicken Tikka, Onion, Top Cheese",
+            sizes: [
+              { size: "S", price: 450 },
+              { size: "M", price: 950 },
+              { size: "L", price: 1200 },
+              { size: "XL", price: 1650 }
+            ]
+          },
+          {
+            label: "Supreme Pizza",
+            detail: "Pizza Sauce, Chicken Fajita, Chicken Tikka,Capsicum, Onion,Cheese,Top Black Olive",
+            sizes: [
+              { size: "S", price: 450 },
+              { size: "M", price: 950 },
+              { size: "L", price: 1200 },
+              { size: "XL", price: 1650 }
+            ]
+          },
+          {
+            label: "Fajita Pizza",
+            detail: "Pizza Sauce, Chicken Fajita, Capsicum, Onion, Top Cheese",
+            sizes: [
+              { size: "S", price: 450 },
+              { size: "M", price: 950 },
+              { size: "L", price: 1200 },
+              { size: "XL", price: 1650 }
+            ]
+          },
+          {
+            label: "Cheese Lover",
+            detail: "Pizza Sauce, Extra Loaded Cheese",
+            sizes: [
+              { size: "S", price: 450 },
+              { size: "M", price: 950 },
+              { size: "L", price: 1200 },
+              { size: "XL", price: 1650 }
+            ]
+          },
+          {
+            label: "Fajita Sicilian",
+            detail: "Dip Souce, Pizza Sauce, Chicken Fajita, Onion, Capsicum, Jalapeno,Top Cheese",
+            sizes: [
+              { size: "S", price: 450 },
+              { size: "M", price: 950 },
+              { size: "L", price: 1200 },
+              { size: "XL", price: 1650 }
+            ]
+          }
+        ]
+      },
+      {
+        id: "special-pizza",
+        title: "Special Pizza",
+        category: "Special Pizza",
+        badge: "Best Seller",
+        badgeClass: "hot",
+        image: "img/menu/3.jpg",
+        short: "Click to view flavors & sizes (S, M, L, XL)",
+        description: "Our premium special pizza range mixes rich toppings, bold sauces, and loaded cheese for extraordinary flavor.",
+        firstPrice: 799,
+        items: [
+          {
+            label: "Otaku Special",
+            detail: "Special Sauce, Chicken Tikka, Chicken Fajita, Chicken Mughlai,Onion, Capsicum, Mushroom, Top Cheese,Black Olive,Top Souce",
+            sizes: [
+              { size: "S", price: 500 },
+              { size: "M", price: 650 },
+              { size: "L", price: 1350 },
+              { size: "XL", price: 1800 }
+            ]
+          },
+          {
+            label: "Margarita Special",
+            detail: "Chicken Tikka, Smoky Chicken, Mushroom, Capsicum, Sausages, Sauce, Cheese",
+            sizes: [
+              { size: "S", price: 500 },
+              { size: "M", price: 650 },
+              { size: "L", price: 1350 },
+              { size: "XL", price: 1800 }
+            ]
+          },
+          {
+            label: "Euro Special",
+            detail: "Dip Sauce, Smoky Chicken, Sausages, Capsicum,Top Cheese, Special Souce",
+            sizes: [
+              { size: "S", price: 500 },
+              { size: "M", price: 650 },
+              { size: "L", price: 1350 },
+              { size: "XL", price: 1800 }
+            ]
+          },
+          {
+            label: "Muglai Special",
+            detail: "Muglai Sauce, Muglai Chicken, Onion, Capsicum, Jalapeno, Black Olive, Top Cheese",
+            sizes: [
+              { size: "S", price: 500 },
+              { size: "M", price: 650 },
+              { size: "L", price: 1350 },
+              { size: "XL", price: 1800 }
+            ]
+          },
+          {
+            label: "Super Supreme Special",
+            detail: "Special Sauce, Chicken Tikka, Onion, Capsicum, Black Olive, Jalapeno, Tomato, Top Cheese",
+            sizes: [
+              { size: "S", price: 500 },
+              { size: "M", price: 650 },
+              { size: "L", price: 1350 },
+              { size: "XL", price: 1800 }
+            ]
+          }
+        ]
+      },
+      {
+        id: "signature-pizza",
+        title: "Signature Pizza",
+        category: "Signature Pizza",
+        badge: "Chef Special",
+        badgeClass: "hot",
+        image: "img/menu/4.jpg",
+        short: "Click to view flavors & sizes (M, L, XL)",
+        description: "Chef-crafted signature pizzas built for big appetite and bold, unforgettable flavor.",
+        firstPrice: 1599,
+        items: [
+          {
+            label: "Kabab Stuffer Pizza",
+            detail: "Edge Kabab Stuffer, Chicken Tikka,  Chicken Fajita, Chicken Mughlai, Onion, Capsicum, Mushroom, Black Olive, Sauce, Top Cheese",
+            sizes: [
+              { size: "M", price: 1200 },
+              { size: "L", price: 1550 },
+              { size: "XL", price: 2200 }
+            ]
+          },
+          {
+            label: "Chicken Cheese Pizza",
+            detail: "Edge Stuffer Chicken Cheese, Chicken Tikka, Chicken Fajita, Chicken Mughlai, Onion, Capsicum, Mushroom, Black Olive, Sauce, Top Cheese",
+            sizes: [
+              { size: "M", price: 1200 },
+              { size: "L", price: 1550 },
+              { size: "XL", price: 2200 }
+            ]
+          },
+          {
+            label: "Royal Pizza",
+            detail: "Crown Chicken Bowl, Chicken Tikka, Chicken Fajita, Chicken Muglai, Onion, Capsicum, Mushroom, Black Olive, Sauce, Top Cheese",
+            sizes: [
+              { size: "M", price: 1200 },
+              { size: "L", price: 1550 },
+              { size: "XL", price: 2200 }
+            ]
+          },
+          {
+            label: "Kabab Pizza",
+            detail: "Chicken Tikka, Chicken Fajita, Onion, Kabab, Tomato, Jalapeno, Sauce, Top Cheese",
+            sizes: [
+              { size: "M", price: 1200 },
+              { size: "L", price: 1550 },
+              { size: "XL", price: 2200 }
+            ]
+          },
+          {
+            label: "Malai Boti Pizza",
+            detail: "Special Sauce, Chicken Malai Boti, Onion, Mushroom, Jalapeno, Tomato, Top Cheese",
+            sizes: [
+              { size: "M", price: 1200 },
+              { size: "L", price: 1550 },
+              { size: "XL", price: 2200 }
+            ]
+          }
+        ]
+      },
+      {
+        id: "square-pizza",
+        title: "Square Pizza",
+        category: "Square Pizza",
+        badge: "Mega Size",
+        badgeClass: "hot",
+        image: "img/menu/5.jpg",
+        short: "Click to view options & order",
+        description: "Delicious square crust loaded with signature toppings, rich sauce, and melted mozzarella cheese.",
+        firstPrice: 1100,
+        items: [
+          {
+            label: "1 Meter Square Pizza (Any 3 Flavor)",
+            detail: "Massive 1-meter square pizza loaded with your choice of any 3 flavor, rich sauce, and premium melted mozzarella cheese.",
+            price: 3499
+          },
+          {
+            label: "Square Pizza",
+            detail: "Signature square pizza crafted in Small, Medium and Large sizes with your favorite flavors.",
+            sizes: [
+              { size: "S", price: 600 },
+              { size: "M", price: 1150 },
+              { size: "L", price: 1500 }
+            ]
+          }
+        ]
+      },
+      {
+        id: "burger",
+        title: "Burgers",
+        category: "Burger",
+        badge: "Chef's Pick",
+        badgeClass: "popular",
+        image: "img/menu/6.jpg",
+        short: "Click to view burger items & options",
+        description: "Our delicious range of crispy, zinger, and grilled burgers made with fresh ingredients and signature sauces.",
+        firstPrice: 350,
+        items: [
+          { label: "Zingerista Burger", detail: "Plain mio, Zinger pc, zinger souce, ice berg, tangy Souce", price: 399 },
+          { label: "Crispy Burger", detail: "Crispy petty, ice burger, burger Souce", price: 320 },
+          { label: "Zinger eat up", detail: "Zinger souce, 2pcs zinger fillet with cheese slice, Burger Souce, ice burger", price: 750 },
+          { label: "Grill Burger", detail: "Thai grill pc, ring onion, ring tomato, grill souce, pickle, ice burger", price: 550 },
+          { label: "Fire cracking burger", detail: "1 PC chapati grill, 1 PC stake with cheese slice, capsicum, ice burger, stake souce", price: 550 }
+        ]
+      },
+            {
+        id: "platter",
+        title: "Special Platters",
+        category: "Special Platter",
+        badge: "Special",
+        badgeClass: "hot",
+        image: "img/menu/7.jpg",
+        short: "Click to view all platter deals",
+        description: "Special platter deals crafted to share, perfect with family gatherings and casual nights.",
+        firstPrice: 850,
+        items: [
+          { label: "Otaku Platter", detail: "4 Spin Roll, 6 Pcs Oven Baked Wings, Half Portion Fries, Dip Sauce", price: 850 },
+          { label: "BBQ Platter", detail: "4 BBQ Spin Roll, 6 Pcs Oven Baked Wings, Half Portion Fries, Dip Sauce", price: 900 },
+          { label: "Malai Platter", detail: "4 Pcs Malai Spin Roll, 6 Pcs Oven Baked Wings, Half Portion Fries, Dip Sauce", price: 1000 },
+          { label: "Grill Platter", detail: "4 Pcs Spin Roll, Half Portion Fries, 5 Pcs Crispy Hot Wings, Dip Sauce", price: 950 },
+          { label: "Steak Platter", detail: "4 Pcs Spin Roll, Half Portion Fries, 5 Pcs Crispy Hot Wings, Dip Sauce", price: 950 }
+        ]
+      },
+
+      {
+        id: "sandwich",
+        title: "Pizza Sandwich",
+        category: "Sandwich",
+        badge: "Special",
+        badgeClass: "hot",
+        image: "img/menu/14.jpg",
+        short: "Click to view all sandwich deals",
+        description: "Special sandwich deals crafted to share, perfect with family gatherings and casual nights.",
+        firstPrice: 890,
+        items: [
+          { label: "Mexican Sandwich", detail: "Chicken Tikka, Onion, Capsicum, Cheese, Ice berg, Mexican Souce", price: 700 },
+          { label: "Otaku Sandwich", detail: "Chicken Tikka, Chicken Fajita, Cucumber, Tomato, Ice berg, Special Souce", price: 799 },
+          { label: "Malai Boti Sandwich", detail: "Malai chicken, Onion, jalapeno, Mushroom, Cucumber, Tomato, Ice berg, Cheese, Creamy Souce", price: 799 },
+          { label: "Stake Sandwich", detail: "Chicken Tikka, Stake, Ice berg, Pickle, Cheese, Souce", price: 899 },
+          { label: "Mughlai Sandwich", detail: "Mughlai Chicken, Ice berg, tomato, Cheese, Mughlai Souce", price: 750 }
+        ]
+      },
+      {
+        id: "fries",
+        title: "Loaded & Crispy Fries",
+        category: "Fries",
+        badge: "Crispy",
+        badgeClass: "hot",
+        image: "img/menu/8.jpg",
+        short: "Click to view flavors & sizes",
+        description: "Classic salted golden crispy potato fries and loaded fries in a range of delicious flavors.",
+        firstPrice: 300,
+        items: [
+          { label: "Plain Fries", detail: "Classic salted golden crispy potato fries", sizes: [{ size: "M", price: 300 }, { size: "L", price: 500 }] },
+          { label: "Masala Fries", detail: "Crispy fries dusted with special spicy masala blend", sizes: [{ size: "M", price: 350 }, { size: "L", price: 550 }] },
+          { label: "Otaku Loaded Fries", detail: "Loaded with chicken chunks, melted cheese, jalapenos & house sauce", sizes: [{ size: "L", price: 650 }] },
+          { label: "Buffalo Fries", detail: "Tossed in tangy buffalo glaze with creamy ranch drizzle", sizes: [{ size: "L", price: 750  }] },
+          { label: "Pizza Fries", detail: "Topped with pizza sauce, chicken tikka, black olives & extra mozzarella cheese", sizes: [{ size: "L", price: 500 }] }
+        ]
+      },
+      {
+        id: "wings",
+        title: "Hot & Flavorful Wings",
+        category: "Wings",
+        badge: "Hot & Crispy",
+        badgeClass: "hot",
+        image: "img/menu/9.jpg",
+        short: "Click to view flavors",
+        description: "Crispy fried chicken wings with signature seasoning and fiery flavors.",
+        firstPrice: 350,
+        items: [
+          { label: "Hot Wings", detail: "Classic crispy golden fried chicken wings with signature seasoning", sizes: [{ size: "5 Pcs", price: 350 }, { size: "10 Pcs", price: 650 }] },
+          { label: "Buffalo Wings", detail: "Tossed in tangy hot buffalo sauce served with dip", sizes: [{ size: "5 Pcs", price: 400 }, { size: "10 Pcs", price: 750 }] },
+          { label: "Hot Flaming Wings", detail: "Extra spicy coated with fiery hot chili glaze", sizes: [{ size: "5 Pcs", price: 400 }, { size: "10 Pcs", price: 750 }] }
+        ]
+      },
+      {
+        id: "baked-wings",
+        title: "Oven Baked Wings",
+        category: "Wings",
+        badge: "Oven Baked",
+        badgeClass: "hot",
+        image: "img/menu/10.jpg",
+        short: "Click to view flavors (5 Pcs / 10 Pcs)",
+        description: "Slowly oven-roasted juicy chicken wings with signature herb rub.",
+        firstPrice: 400,
+        items: [
+          { label: "Oven Baked Wings", detail: "Slowly oven-roasted juicy chicken wings with signature herb rub", sizes: [{ size: "6 Pcs", price: 400 }, { size: "12 Pcs", price: 750 }] },
+          { label: "Honey Wings", detail: "Oven-baked wings glazed with sweet & savory honey garlic sauce", sizes: [{ size: "6 Pcs", price: 500 }, { size: "12 Pcs", price: 900 }] },
+          { label: "Peri Peri Wings", detail: "Coated with fiery African Peri Peri spice glaze", sizes: [{ size: "6 Pcs", price: 500 }, { size: "12 Pcs", price: 900 }] }
+        ]
+      },
+            {
+        id: "Appetizer",
+        title: "Appetizer",
+        category: "Appetizer",
+        badge: "Chunks",
+        badgeClass: "hot",
+        image: "img/menu/18.jpg",
+        short: "Click to view options",
+        description: "Delicious appetizers baked and fried to perfection.",
+        firstPrice: 299,
+        items: [
+          { label: "Calzone", detail: "Folded pizza stuffed with melted cheese & savory rich fillings", sizes: [{ size: "Regular", price: 899 }] },
+          { label: "Doner", detail: "Juicy marinated chicken wrapped with fresh veggies & garlic sauce", sizes: [{ size: "Regular", price: 299 }, { size: "Cheese", price: 399 }] },
+          { label: "Hot Shots", detail: "Crispy, bite-sized chicken poppers tossed in spicy seasoning", sizes: [{ size: "6 Pcs", price: 350 }, { size: "12 Pcs", price: 650 }] },
+          { label: "Nuggets", detail: "Golden, crispy tender chicken bites served hot", sizes: [{ size: "6 Pcs", price: 300 }, { size: "12 Pcs", price: 600 }] },
+          { label: "Jalapeno Cheese Stick", detail: "Crispy fried sticks packed with gooey melted cheese and spicy jalapeno kick", sizes: [{ size: "Regular", price: 899 }] }
+        ]
+      },
+
+      {
+        id: "spin-Roll",
+        title: "Spin Roll",
+        category: "Spin Roll",
+        badge: "Juicy",
+        badgeClass: "Creamy",
+        image: "img/menu/20.jpg",
+        short: "Click to view flavors",
+        description: "Crisp golden roll packed with sizzling chicken, herbs, rich pizza sauce, and an explosive pull of melted cheese. A total game-changer",
+        firstPrice: 450,
+        items: [
+          { label: "Otaku Spin Roll", detail: "Slowly oven-roasted juicy chicken wings with signature herb rub", sizes: [{ size: "Regular", price: 450  }] },
+          { label: "Malai Boti Spin Roll", detail: "Tender, melt-in-your-mouth chicken malai boti infused with subtle spices and cream, wrapped inside a golden crispy roll with garlic sauce and fresh salad. Pure creamy perfection", sizes: [{ size: "Regular", price: 500 }] },
+          { label: "Bbq Spin Roll", detail: "Packed with tender, charcoal-smoked chicken chunks, rich BBQ sauce, and a fresh salad crunch inside a hot, crispy roll. Pure BBQ perfection", sizes: [{ size: "Regular", price: 500 }] },
+          { label: "Grill Spin Roll", detail: "Crispy roll filled with juicy, flame-grilled chicken chunks and zesty garlic sauce. Simple, smoky, and deliciously crisp", sizes: [{ size: "Regular", price: 550 }] },
+          { label: "Stake Spin Rolll", detail: "Crispy golden roll stuffed with tender grilled steak, rich pepper sauce, and melted cheese. Pure meat-lover’s dream", sizes: [{ size: "Regular", price: 550 }] }
+        ]
+      },
+            {
+        id: "Pasta",
+        title: "Otaku Special Pasta",
+        category: "Pasta",
+        badge: "Creamy",
+        badgeClass: "hot",
+        image: "img/menu/17.jpg",
+        short: "Click to view flavors",
+        description: "Rich white sauce pasta loaded with melted cheese, juicy chicken, capsicum, mushroom / sweet corn, and black olives",
+        firstPrice: 450,
+        items: [
+          { label: "Otaku Special Pasta", detail: "White sauce, cheese, chicken, capsicum, mushroom / sweet corn, black olive", sizes: [{ size: "F1", price: 450 }, { size: "F2 ", price: 850 }] },
+          { label: "Crunchy Pasta", detail: "Zinger Piece, White sauce, cheese, chicken, capsicum, mushroom / sweet corn, black olive", sizes: [{ size: "Regular", price: 500 }, { size: "F2 ", price: 950 }] },
+          { label: "Tangy Pasta", detail: "White Souce, Tangy Souce, olive, cheese chicken capsicum", sizes: [{ size: "F1", price: 450 }, { size: "F2", price: 850 }] }
+        ]
+      },
+
+      {
+        id: "wrap",
+        title: "Wrap",
+        category: "Wrap", 
+        badge: "Oven Baked",
+        badgeClass: "hot",
+        image: "img/menu/19.jpg",
+        short: "Click to view flavors",
+        description: "Delicious loaded wraps rolled with fresh veggies and signature sauces.",
+        firstPrice: 600,
+        items: [
+          { 
+            label: "Wrap Zilla", 
+            detail: "wrap Souce, zinger sticks, latus,special-Souce", 
+            sizes: [{ size: "Regular", price: 600 }] 
+          },
+          { 
+            label: "Chef Special", 
+            detail: "2 type chi BBQ Souce, Stake souce, lates Cucumber, onion", 
+            sizes: [{ size: "Regular", price: 700 }] 
+          }
+        ]
+      },
+            {
+        id: "coffee",
+        title: "Hot Coffee",
+        category: "Hot Coffee",
+        badge: "Fresh Brew",
+        badgeClass: "hot",
+        image: "img/menu/11.jpg",
+        short: "Click to view Hot Coffee items",
+        description: "Freshly roasted premium coffee beans blended with steaming hot milk and a velvety layer of microfoam. Bold, comforting, and irresistibly smooth",
+        firstPrice: 650,
+        items: [
+          { label: "Americano", detail: "Rich espresso diluted with hot water for a smooth black coffee", price: 750 },
+          { label: "Hot Coffee", detail: "Espresso blend with silky steamed milk and subtle foam", price: 699 },
+          { label: "Caramel Hot Coffee", detail: "Steamed espresso infused with rich buttery caramel drizzle", price: 800 },
+          { label: "Cappuccino", detail: "Equal parts espresso, steamed milk, and rich thick milk foam", price: 750 },
+          { label: "Vanilla Hot Coffee", detail: "Smooth espresso blended with steamed milk and sweet aromatic vanilla flavor", price: 750 }
+        ]
+      },
+
+      {
+        id: "cold-cofee",
+        title: "Cold Coffee",
+        category: "Cold Cofee",
+        badge: "Chill Brew",
+        badgeClass: "popular",
+        image: "img/menu/16.jpg",
+        short: "Click to view Cold Coffee items",
+        description: "Smooth, thick, and served ice-cold. A rich blend whipped to icy perfection for an instant energy kick",
+        firstPrice: 900,
+        items: [
+          { label: "Vanilla", detail: "Rich espresso diluted with hot water for a smooth black coffee", price: 950 },
+          { label: "Cold Coffee", detail: "Espresso blend with silky steamed milk and subtle foam", price: 900 },
+          { label: "Caramid", detail: "Steamed espresso infused with rich buttery caramid drizzle", price: 950 },
+          { label: "Chocolate", detail: "Equal parts espresso, steamed milk, and rich thick milk foam", price: 950 },
+          { label: "Latte", detail: "Chilled espresso blended with cold milk & sweet vanilla bean glaze", price: 900 }
+        ]
+      },
+      {
+        id: "Tea",
+        title: "Tea",
+        category: "Tea",
+        badge: "Special",
+        badgeClass: "hot",
+        image: "img/menu/22.jpg",
+        short: "Click to view tea options",
+        description: "Freshly brewed hot tea prepared with aromatic spices to lift your mood",
+        firstPrice: 250,
+        items: [
+          { label: "Cardamon Tea", detail: "Traditional aromatic tea brewed with fresh green cardamom and milk", price: 250 }
+        ]
+      },
+      
+      {
+        id: "Soda",
+        title: "Refreshing Soda",
+        category: "Soda",
+        badge: "Refreshing",
+        badgeClass: "hot",
+        image: "img/menu/12.jpg",
+        short: "Click to view soda drinks",
+        description: "Pure fizzy bliss in every sip! Super chilled, extra refreshing, and made to lift your mood",
+        firstPrice: 320,
+        items: [
+          { label: "Peach", detail: "Sparkling soda infused with sweet flavored syrup over crushed ice", price: 700 },
+          { label: "Blue Lagoon", detail: "Blue curacao syrup blended with lemon juice & fizzy soda", price: 700 },
+          { label: "Lemon", detail: "Zesty fresh mint lemon cooler with sparkling ice soda", price: 700 }
+        ]
+      },
+      {
+        id: "mocktail",
+        title: "Mocktail",
+        category: "Mocktail",
+        badge: "Master Sip",
+        badgeClass: "hot",
+        image: "img/menu/15.jpg",
+        short: "Click to view mocktail drinks",
+        description: "Sparkling, fizzy, and fruit-forward mocktails made for refreshing moments.",
+        firstPrice: 250,
+        items: [
+          { label: "Green Apple", detail: "Sparkling soda infused with sweet flavored syrup over crushed ice", price: 250 },
+          { label: "Blue Berry", detail: "Blue curacao syrup blended with lemon juice & fizzy soda", price: 250 },
+          { label: "Mint", detail: "Zesty fresh mint lemon cooler with sparkling ice soda", price: 250 },
+          { label: "Ilaichi", detail: "Sweet peach puree blended with chilled fizzy soda & mint", price: 250 }
+        ]
+      },
+      {
+        id: "shakes",
+        title: "Delicious Shakes",
+        category: "Shakes",
+        badge: "Thick & Creamy",
+        badgeClass: "hot",
+        image: "img/menu/13.jpg",
+        short: "Click to view all shake flavors",
+        description: "Creamy shakes made rich, smooth, and indulgent with premium flavors.",
+        firstPrice: 380,
+        items: [
+          { label: "Vanilla Shake", detail: "Rich fresh chilled milk & vanilla ice cream", price: 750 },
+          { label: "Caramel Shake", detail: "Creamy milk shake swirled with salted caramel drizzle", price: 750 },
+          { label: "Oreo Shake", detail: "Blended crunchy Oreo cookies with dark chocolate drizzle", price: 850 },
+          { label: "Chocolate Shake", detail: "Indulgent cocoa chocolate blended thick shake topped with fudge", price: 850 },
+          { label: "Otaku Special Shake", detail: "Signature house blend loaded with brown chocolate, nuts & premium scoop", price: 850 }
+        ]
+      },
+      {
+  id: "ice-cream",
+  title: "Indulgent Ice Cream",
+  category: "Ice Cream",
+  badge: "Cold Delight",
+  badgeClass: "popular",
+  image: "img/menu/21.jpg",
+  short: "Click to view scoops & flavors",
+  description: "Rich, creamy, and chilled artisanal ice creams served in classic scoops and sundaes.",
+  firstPrice: 100,
+  items: [
+    { label: "Mango Scoop", detail: "Sweet and creamy fresh mango scoop", price: 100 },
+    { label: "Kulfa Scoop", detail: "Traditional rich kulfa with nuts and syrup", price: 100 },
+    { label: "Pista Scoop", detail: "Rich pistachio ice cream blended with crushed nuts", price: 100 },
+    { label: "Chocolate Scoop", detail: "Deep dark chocolate indulgence", price: 100 },
+    { label: "Vanilla Scoop", detail: "Classic rich vanilla bean scoop", price: 100 },
+    { label: "Caramel Scoop", detail: "Loaded special flavor blend with extra toppings", price: 100 }
+  ]
+}
+];
+
+const state = {
+  category: "All",
+  searchQuery: "",
+  cart: []
+};
+
+
+    const filtersEl = document.getElementById("filters");
+    const menuGrid = document.getElementById("menuGrid");
+    const cartList = document.getElementById("cartList");
+    const headerCartCount = document.getElementById("headerCartCount");
+    const subtotalValue = document.getElementById("subtotalValue");
+    const cartPanel = document.getElementById("cartPanel");
+    const drawer = document.getElementById("productDrawer");
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+    const cartClose = document.getElementById("cartClose");
+    const headerCartBtn = document.getElementById("headerCartBtn");
+    const menuSearchInput = document.getElementById("menuSearchInput");
+
+    function money(value) {
+      return "Rs. " + Number(value).toLocaleString("en-US");
+    }
+
+    // Professional Toast Notification Function
+    function showToast(message) {
+      const toast = document.getElementById("toastPopup");
+      const msgEl = document.getElementById("toastMsg");
+      
+      if(msgEl) msgEl.textContent = message;
+      
+      toast.classList.add("show");
+      
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+    }
+
+    /* LIVE BUSINESS OPEN/CLOSED CHECKER & ANIMATED BANNER (10:00 AM - 3:00 AM) */
+    function checkBusinessStatus() {
+      const statusEl = document.getElementById("businessStatus");
+      const textEl = document.getElementById("statusText");
+      const hoursBanner = document.getElementById("hoursBanner");
+      const bannerText = document.getElementById("bannerText");
+      const bannerIcon = document.getElementById("bannerIcon");
+
+      const now = new Date();
+      const currentHour = now.getHours(); // 0 to 23
+
+      const isOpen = currentHour >= 10 || currentHour < 3;
+
+      if (isOpen) {
+        statusEl.className = "business-status open";
+        textEl.textContent = "Open Now";
+
+        hoursBanner.className = "hours-banner show";
+        bannerIcon.className = "fa-solid fa-store";
+        bannerText.textContent = "🔥 Restaurant is Open Now! Mon - Sun: 10:00 AM - 3:00 AM. Order fresh & delicious food!";
+      } else {
+        statusEl.className = "business-status closed";
+        textEl.textContent = "Closed";
+
+        hoursBanner.className = "hours-banner show closed-mode";
+        bannerIcon.className = "fa-solid fa-moon";
+        bannerText.textContent = "Restaurant is currently closed! We open daily at 10:00 AM. You can still explore our menu.";
+      }
+    }
+
+    function getFilteredProducts() {
+      return menuData.filter(item => {
+        const matchesCategory = state.category === "All" || item.category === state.category;
+        
+        const q = state.searchQuery.toLowerCase().trim();
+        if (!q) return matchesCategory;
+
+        const inTitle = item.title.toLowerCase().includes(q);
+        const inCategory = item.category.toLowerCase().includes(q);
+        const inDesc = item.description.toLowerCase().includes(q);
+        const inItems = item.items && item.items.some(subItem => 
+          subItem.label.toLowerCase().includes(q) || (subItem.detail && subItem.detail.toLowerCase().includes(q))
+        );
+
+        return matchesCategory && (inTitle || inCategory || inDesc || inItems);
+      });
+    }
+
+    function renderFilters() {
+      filtersEl.innerHTML = filters.map(filter => `
+        <button class="filter-chip ${state.category === filter ? "active" : ""}" type="button" data-filter="${filter}">
+          ${filter}
+        </button>
+      `).join("");
+
+      filtersEl.querySelectorAll(".filter-chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.category = btn.dataset.filter;
+          renderFilters();
+          renderSkeletonAndMenu();
+        });
+      });
+    }
+
+    /* RENDER SKELETON LOADERS WITH ANIMATION BEFORE RENDERING REAL MENU */
+    function renderSkeletonAndMenu() {
+      menuGrid.innerHTML = Array(6).fill(0).map(() => `
+        <div class="skeleton-card">
+          <div class="skeleton-box skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-box skeleton-title"></div>
+            <div class="skeleton-box skeleton-text"></div>
+            <div class="skeleton-foot">
+              <div class="skeleton-box" style="width: 60px; height: 20px; border-radius: 4px;"></div>
+              <div class="skeleton-box skeleton-btn"></div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      setTimeout(() => {
+        renderMenu();
+      }, 250);
+    }
+
+    function renderMenu() {
+      const products = getFilteredProducts();
+
+      if (products.length === 0) {
+        menuGrid.innerHTML = `<div class="no-results"><i class="fa-solid fa-magnifying-glass mb-2" style="font-size: 2rem;"></i><br/>No menu items found matching "${state.searchQuery || state.category}"</div>`;
+        return;
+      }
+
+      menuGrid.innerHTML = products.map(product => `
+        <article class="menu-card" tabindex="0" data-id="${product.id}" aria-label="${product.title}">
+          <div class="menu-image">
+            <img src="${product.image}" alt="${product.title}" loading="lazy" decoding="async" />
+            <div class="menu-badge ${product.badgeClass}">${product.badge}</div>
+          </div>
+
+          <div class="menu-body">
+            <span class="menu-category">${product.category}</span>
+            <h3 class="menu-title">${product.title}</h3>
+            <p class="menu-desc">${product.short}</p>
+
+            <div class="menu-foot">
+              <div class="price-box">
+                <strong>${money(product.firstPrice)}</strong>
+                <small>Starting At</small>
+              </div>
+
+              <button class="view-btn" type="button">Add to Cart</button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+
+      menuGrid.querySelectorAll(".menu-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const product = menuData.find(item => item.id === card.dataset.id);
+          if (product) openDrawer(product);
+        });
+
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            const product = menuData.find(item => item.id === card.dataset.id);
+            if (product) openDrawer(product);
+          }
+        });
+      });
+    }
+
+    // SECTION SEARCH BAR REAL-TIME INPUT EVENT FIX
+    menuSearchInput.addEventListener("input", (e) => {
+      state.searchQuery = e.target.value;
+      renderSkeletonAndMenu();
+    });
+
+    function openDrawer(product) {
+      const variantsHtml = product.items.map(item => {
+        if (item.sizes) {
+          return `
+            <div class="variant-box">
+              <div class="variant-heading">
+                <strong>${item.label}</strong>
+                <small>${item.detail}</small>
+              </div>
+
+              ${item.sizes.map(size => `
+                <div class="variant-row">
+                  <div class="variant-name">
+                    <strong>Size: ${size.size}</strong>
+                  </div>
+
+                  <div class="variant-controls">
+                    <div class="variant-price">${money(size.price)}</div>
+                    <div class="stepper" aria-label="Quantity selector">
+                      <button type="button" class="stepper-minus" aria-label="Decrease quantity">−</button>
+                      <input type="number" value="1" readonly />
+                      <button type="button" class="stepper-plus" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button type="button" class="pick-btn" data-product="${product.title}" data-name="${item.label}" data-size="${size.size}" data-price="${size.price}">
+                      Add
+                    </button>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="variant-box">
+            <div class="variant-row">
+              <div class="variant-name">
+                <strong>${item.label}</strong>
+                <small>${item.detail}</small>
+              </div>
+
+              <div class="variant-controls">
+                <div class="variant-price">${money(item.price)}</div>
+
+                <div class="stepper" aria-label="Quantity selector">
+                  <button type="button" class="stepper-minus" aria-label="Decrease quantity">−</button>
+                  <input type="number" value="1" readonly />
+                  <button type="button" class="stepper-plus" aria-label="Increase quantity">+</button>
+                </div>
+
+                <button type="button" class="pick-btn" data-product="${product.title}" data-name="${item.label}" data-size="Regular" data-price="${item.price}">
+                  Add
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const totalQty = state.cart.reduce((sum, item) => sum + item.qty, 0);
+
+      drawer.innerHTML = `
+        <div class="drawer-head">
+          <div class="drawer-kicker">${product.category}</div>
+          <div class="drawer-actions">
+            <button class="drawer-cart-btn" id="drawerCartBtn" type="button" aria-label="Open cart">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="drawer-cart-count" id="drawerCartCount">${totalQty}</span>
+            </button>
+            <button type="button" class="drawer-close" aria-label="Close product view">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="drawer-body">
+          <div class="drawer-image-wrap">
+            <img src="${product.image}" alt="${product.title}" loading="lazy" decoding="async" />
+          </div>
+
+          <div class="drawer-info">
+            <h3>${product.title}</h3>
+            <p>${product.description}</p>
+          </div>
+
+          <div class="selector-group">
+            ${variantsHtml}
+          </div>
+        </div>
+
+        <div class="drawer-footer">
+          <div class="drawer-total">
+            <small>Total</small>
+            <strong>${money(product.firstPrice)}</strong>
+          </div>
+
+          <button type="button" class="drawer-submit" aria-label="Add selected product">Add to Order</button>
+        </div>
+      `;
+
+      drawer.classList.add("open");
+      drawerBackdrop.classList.add("show");
+      document.body.style.overflow = "hidden";
+
+      const closeDrawer = () => {
+        drawer.classList.remove("open");
+        drawerBackdrop.classList.remove("show");
+        document.body.style.overflow = "";
+      };
+
+      drawer.querySelector(".drawer-close").addEventListener("click", closeDrawer);
+      drawerBackdrop.addEventListener("click", closeDrawer);
+
+      drawer.querySelector("#drawerCartBtn").addEventListener("click", () => {
+        closeDrawer();
+        cartPanel.classList.add("open");
+      });
+
+      drawer.querySelectorAll(".stepper-plus").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector("input");
+          input.value = Number(input.value || 1) + 1;
+        });
+      });
+
+      drawer.querySelectorAll(".stepper-minus").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const input = btn.parentElement.querySelector("input");
+          const current = Number(input.value || 1);
+          input.value = current > 1 ? current - 1 : 1;
+        });
+      });
+
+      drawer.querySelectorAll(".pick-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qty = Number(btn.parentElement.querySelector("input").value || 1);
+          const item = {
+            productTitle: btn.dataset.product,
+            name: btn.dataset.name,
+            size: btn.dataset.size,
+            price: Number(btn.dataset.price || 0),
+            qty: qty
+          };
+          state.cart.push(item);
+          renderCart();
+          showToast(`🛒 "${item.productTitle} (${item.name})" added successfully!`);
+          btn.parentElement.querySelector("input").value = 1;
+        });
+      });
+
+      drawer.querySelector(".drawer-submit").addEventListener("click", () => {
+        cartPanel.classList.add("open");
+        drawer.classList.remove("open");
+        drawerBackdrop.classList.remove("show");
+        document.body.style.overflow = "";
+      });
+    }
+
+    function renderCart() {
+      const totalQty = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      headerCartCount.textContent = totalQty;
+
+      const drawerCartCount = document.getElementById("drawerCartCount");
+      if (drawerCartCount) {
+        drawerCartCount.textContent = totalQty;
+      }
+
+      if (!state.cart.length) {
+        cartList.innerHTML = '<div class="cart-empty">Your cart is empty.</div>';
+        subtotalValue.textContent = "Rs. 0";
+        return;
+      }
+
+      const subtotal = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      subtotalValue.textContent = money(subtotal);
+
+      cartList.innerHTML = state.cart.map((item, index) => {
+        let detailsText = "";
+        if (item.name && item.size && item.name !== item.size) {
+          detailsText = `${item.name} • Size: ${item.size}`;
+        } else if (item.size && item.size !== "Regular") {
+          detailsText = `Size: ${item.size}`;
+        } else {
+          detailsText = `${item.name}`;
+        }
+
+        return `
+          <div class="cart-item">
+            <div class="cart-meta">
+              <strong>${item.productTitle}</strong>
+              <small>${detailsText} • Qty ${item.qty}</small>
+            </div>
+
+            <div class="cart-actions">
+              <span class="cart-price">${money(item.price * item.qty)}</span>
+              <button class="remove-item" type="button" data-index="${index}" aria-label="Remove item">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      cartList.querySelectorAll(".remove-item").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const index = Number(btn.dataset.index);
+          state.cart.splice(index, 1);
+          renderCart();
+        });
+      });
+    }
+
+    headerCartBtn.addEventListener("click", () => {
+      cartPanel.classList.toggle("open");
+    });
+
+    cartClose.addEventListener("click", () => {
+      cartPanel.classList.remove("open");
+    });
+
+    document.getElementById("checkoutForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!state.cart.length) {
+        alert("Your cart is empty.");
+        return;
+      }
+
+      const customerName = document.getElementById("customerName").value.trim();
+      const customerPhone = document.getElementById("customerPhone").value.trim();
+      const address = document.getElementById("address").value.trim();
+
+      const subtotal = state.cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+      const orderItemsText = state.cart.map((item, idx) => {
+        let detailsText = (item.name && item.size && item.name !== item.size) ? `${item.name} (${item.size})` : item.name;
+        return `${idx + 1}. *${item.productTitle}*\n   • Option: ${detailsText}\n   • Qty: ${item.qty}\n   • Price: ${money(item.price * item.qty)}`;
+      }).join("\n\n");
+
+      const message = 
+`*OTAKU ORDER*
+
+👤 *Customer:* ${customerName}
+📞 *Phone:* ${customerPhone}
+📍 *Address:* ${address || "N/A"}
+
+🛒 *Order Items:*
+${orderItemsText}
+
+💵 *Total Bill:* *${money(subtotal)}*
+
+✨ Thank you for ordering with OTAKU!`;
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=923290099952&text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, "_blank");
+
+      state.cart = [];
+      renderCart();
+      cartPanel.classList.remove("open");
+      this.reset();
+    });
+
+    document.getElementById("reservationForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const guests = document.getElementById("guests").value;
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const message = document.getElementById("message").value.trim();
+
+      const text =
+        `Hello, I would like to reserve a table.\n\n` +
+        `Name: ${name}\n` +
+        `Phone: ${phone}\n` +
+        `Email: ${email}\n` +
+        `Guests: ${guests}\n` +
+        `Date: ${date}\n` +
+        `Time: ${time}\n` +
+        `Special Requests: ${message || "None"}\n\n` +
+        `Thank you.`;
+
+      const reservationUrl = `https://wa.me/923290099952?text=${encodeURIComponent(text)}`;
+      window.open(reservationUrl, "_blank");
+
+      this.reset();
+      const successMsg = document.getElementById("successMsg");
+      successMsg.classList.add("show");
+
+      setTimeout(() => successMsg.classList.remove("show"), 4000);
+    });
+
+    checkBusinessStatus();
+    renderFilters();
+    renderSkeletonAndMenu();
+    renderCart();
+  </script>
+</body>
+</html>
